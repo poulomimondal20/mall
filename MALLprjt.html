@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mall of America — The Center of Everything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Helvetica+Neue:wght@100;300;400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D4A8;
+    --black: #080808;
+    --off-black: #0F0F0F;
+    --dark: #141414;
+    --mid: #1E1E1E;
+    --surface: #252525;
+    --white: #F5F2EE;
+    --muted: #888;
+    --accent: #C9A96E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(201,169,110,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+  }
+  body:has(a:hover) .cursor, body:has(button:hover) .cursor { width: 16px; height: 16px; }
+  body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 48px;
+    mix-blend-mode: normal;
+  }
+  nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.9) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    position: relative;
+    z-index: 1;
+  }
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s, color 0.3s;
+    font-weight: 400;
+  }
+  .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
+  .nav-cta {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    cursor: none;
+    transition: background 0.3s, color 0.3s;
+    font-weight: 400;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-video-wrap iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 177.78vh;
+    height: 100vh;
+    min-width: 100%;
+    min-height: 56.25vw;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8,8,8,1) 0%,
+      rgba(8,8,8,0.6) 40%,
+      rgba(8,8,8,0.1) 70%,
+      rgba(8,8,8,0.3) 100%
+    );
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 80px;
+    width: 100%;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+    font-weight: 400;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 9vw, 130px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-sub {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(245,242,238,0.7);
+    max-width: 540px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: none;
+    font-weight: 500;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,169,110,0.4); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(245,242,238,0.3);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: none;
+    font-weight: 400;
+    transition: border-color 0.3s, color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats {
+    position: absolute;
+    bottom: 80px;
+    right: 48px;
+    z-index: 2;
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 1s 1.7s forwards;
+  }
+  .hero-stats-item { margin-bottom: 24px; }
+  .hero-stats-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stats-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,242,238,0.5);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 2s forwards;
+  }
+  .scroll-hint span { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245,242,238,0.4); }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(201,169,110,0.7), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* SECTIONS SHARED */
+  section { position: relative; }
+
+  .section-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(245,242,238,0.65);
+    font-weight: 300;
+  }
+
+  /* STATS BAR */
+  #stats-bar {
+    background: var(--off-black);
+    border-top: 1px solid rgba(201,169,110,0.15);
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: linear-gradient(to right, var(--off-black), var(--dark), var(--off-black));
+  }
+  .stat-item {
+    padding: 32px 40px;
+    text-align: center;
+    border-right: 1px solid rgba(201,169,110,0.1);
+    position: relative;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 54px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1;
+    display: block;
+  }
+  .stat-unit { color: var(--gold); }
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+    display: block;
+    font-weight: 400;
+  }
+
+  /* WHY THIS PROPERTY */
+  #why {
+    padding: 140px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .why-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .why-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .why-visual:hover img { transform: scale(1.04); }
+  .why-visual-badge {
+    position: absolute;
+    bottom: 32px;
+    right: -24px;
+    background: var(--gold);
+    color: var(--black);
+    padding: 24px 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+    z-index: 2;
+  }
+  .why-list {
+    list-style: none;
+    margin-top: 40px;
+  }
+  .why-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+    color: rgba(245,242,238,0.7);
+    line-height: 1.6;
+  }
+  .why-list li:last-child { border-bottom: none; }
+  .why-list-icon {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .why-list-icon svg { width: 10px; height: 10px; fill: var(--gold); }
+
+  /* RETAIL GRID */
+  #retail {
+    background: var(--off-black);
+    padding: 120px 48px;
+  }
+  .retail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .retail-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .retail-card {
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+  }
+  .retail-card:first-child { grid-row: 1 / 3; }
+  .retail-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+    min-height: 260px;
+  }
+  .retail-card:first-child img { min-height: 560px; }
+  .retail-card:hover img { transform: scale(1.05); }
+  .retail-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 28px;
+  }
+  .retail-card-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 400;
+  }
+  .retail-card-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold);
+    display: block;
+  }
+
+  /* LUXURY SECTION */
+  #luxury {
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .luxury-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .luxury-brands {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,169,110,0.1);
+    margin-top: 48px;
+  }
+  .luxury-brand-item {
+    background: var(--black);
+    padding: 32px 20px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,242,238,0.5);
+    font-weight: 400;
+    transition: color 0.3s, background 0.3s;
+  }
+  .luxury-brand-item:hover { color: var(--gold); background: var(--dark); }
+  .luxury-visual {
+    position: relative;
+  }
+  .luxury-visual img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+  .luxury-tag {
+    position: absolute;
+    top: 40px;
+    left: -20px;
+    background: var(--black);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 16px 24px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* DINING */
+  #dining {
+    background: var(--dark);
+    padding: 120px 48px;
+  }
+  .dining-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .dining-header { margin-bottom: 64px; }
+  .dining-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .dining-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: none;
+  }
+  .dining-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .dining-card:hover img { transform: scale(1.06); }
+  .dining-card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, transparent 100%);
+  }
+  .dining-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 4px;
+  }
+  .dining-card-type {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* ATTRACTIONS */
+  #attractions {
+    padding: 120px 0;
+    overflow: hidden;
+  }
+  .attractions-header {
+    padding: 0 48px;
+    max-width: 1400px;
+    margin: 0 auto 64px;
+  }
+  .attractions-feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+  .attr-visual {
+    position: relative;
+    overflow: hidden;
+  }
+  .attr-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .attr-content {
+    background: var(--off-black);
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .attr-list { margin-top: 40px; list-style: none; }
+  .attr-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: rgba(245,242,238,0.7);
+  }
+  .attr-list li span:last-child { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+  .nickelodeon-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B35, #FF4500);
+    color: white;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .attr-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 0 48px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2px;
+  }
+  .attr-tab {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,242,238,0.4);
+    padding: 16px 24px;
+    cursor: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+  }
+  .attr-tab.active, .attr-tab:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* EVENTS */
+  #events {
+    background: var(--off-black);
+    padding: 120px 48px;
+  }
+  .events-inner { max-width: 1400px; margin: 0 auto; }
+  .events-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .event-main {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+  }
+  .event-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .event-main-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, transparent 60%);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .event-capacity-pill {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    width: fit-content;
+  }
+  .event-main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .event-main-desc { font-size: 13px; color: rgba(245,242,238,0.6); line-height: 1.7; }
+  .event-side {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .event-card {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    min-height: 160px;
+  }
+  .event-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .event-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(8,8,8,0.85) 0%, transparent 60%);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .event-type {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .event-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+  }
+  .events-data {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(201,169,110,0.1);
+    margin-top: 2px;
+  }
+  .event-data-item {
+    background: var(--off-black);
+    padding: 36px 32px;
+    text-align: center;
+  }
+  .event-data-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--white);
+    display: block;
+    line-height: 1;
+  }
+  .event-data-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* SPONSORSHIP */
+  #sponsorship {
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  .sponsorship-inner { max-width: 1400px; margin: 0 auto; }
+  .sponsorship-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 80px;
+  }
+  .sponsorship-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,169,110,0.1);
+  }
+  .tier-card {
+    background: var(--dark);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .tier-card:hover { background: var(--mid); }
+  .tier-card.featured {
+    background: var(--gold);
+    color: var(--black);
+  }
+  .tier-card.featured .tier-price,
+  .tier-card.featured .tier-name,
+  .tier-card.featured .tier-feature { color: var(--black); }
+  .tier-card.featured .tier-divider { background: rgba(0,0,0,0.2); }
+  .tier-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--gold);
+    padding: 4px 10px;
+    font-weight: 500;
+  }
+  .tier-name {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .tier-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .tier-price-label { font-size: 11px; color: var(--muted); }
+  .tier-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 24px 0; }
+  .tier-features { list-style: none; }
+  .tier-feature {
+    font-size: 12px;
+    color: rgba(245,242,238,0.6);
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tier-feature::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tier-card.featured .tier-feature::before { background: var(--black); }
+  .tier-cta {
+    display: block;
+    margin-top: 32px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 14px;
+    border: 1px solid currentColor;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    cursor: none;
+  }
+  .tier-card:not(.featured) .tier-cta { color: var(--gold); }
+  .tier-card:not(.featured) .tier-cta:hover { background: var(--gold); color: var(--black); }
+  .tier-card.featured .tier-cta { color: var(--black); border-color: var(--black); }
+  .tier-card.featured .tier-cta:hover { background: var(--black); color: var(--gold); }
+
+  /* LEASING */
+  #leasing {
+    background: var(--off-black);
+    padding: 120px 48px;
+  }
+  .leasing-inner { max-width: 1400px; margin: 0 auto; }
+  .leasing-paths {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(201,169,110,0.08);
+    margin-top: 64px;
+  }
+  .leasing-path {
+    background: var(--off-black);
+    padding: 48px 36px;
+    transition: background 0.3s;
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .leasing-path::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .leasing-path:hover { background: var(--dark); }
+  .leasing-path:hover::after { transform: scaleX(1); }
+  .leasing-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(201,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .leasing-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+  .leasing-path-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .leasing-path-desc {
+    font-size: 13px;
+    color: rgba(245,242,238,0.55);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .leasing-path-link {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+  }
+  .leasing-path-link svg { width: 12px; height: 12px; stroke: var(--gold); fill: none; stroke-width: 2; transition: transform 0.3s; }
+  .leasing-path:hover .leasing-path-link svg { transform: translateX(4px); }
+
+  /* CTA STRIP */
+  #cta {
+    background: var(--gold);
+    padding: 100px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: 'MOA';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 280px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+  .cta-inner { position: relative; max-width: 700px; margin: 0 auto; }
+  .cta-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(8,8,8,0.5);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 300;
+    color: var(--black);
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .cta-sub {
+    font-size: 15px;
+    color: rgba(8,8,8,0.6);
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-dark {
+    background: var(--black);
+    color: var(--gold);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: none;
+    font-weight: 500;
+    transition: transform 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-dark:hover { transform: translateY(-2px); }
+  .btn-outline-dark {
+    background: transparent;
+    color: var(--black);
+    border: 1px solid var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: none;
+    font-weight: 400;
+    transition: background 0.3s, color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline-dark:hover { background: var(--black); color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--off-black);
+    padding: 60px 48px;
+    border-top: 1px solid rgba(201,169,110,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-note {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+  }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 400;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.5; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.3); }
+  }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,8,0.95);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal-content {
+    width: 90%;
+    max-width: 800px;
+    background: var(--dark);
+    border: 1px solid rgba(201,169,110,0.2);
+    padding: 64px;
+    position: relative;
+    transform: translateY(32px);
+    transition: transform 0.4s;
+  }
+  .modal-overlay.open .modal-content { transform: translateY(0); }
+  .modal-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 24px;
+    cursor: none;
+    transition: color 0.3s;
+  }
+  .modal-close:hover { color: var(--gold); }
+  .modal-form { margin-top: 40px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .form-input {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.3s;
+    font-weight: 300;
+  }
+  .form-input:focus { border-color: var(--gold); }
+  .form-select {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: none;
+    font-weight: 300;
+  }
+  .form-select:focus { border-color: var(--gold); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--gold);
+    z-index: 1001;
+    transition: width 0.1s;
+  }
+
+  /* VIDEO MODAL */
+  .video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.97);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .video-overlay.open { opacity: 1; pointer-events: all; }
+  .video-wrap {
+    width: 90%;
+    max-width: 1000px;
+    aspect-ratio: 16/9;
+    position: relative;
+  }
+  .video-wrap iframe { width: 100%; height: 100%; border: none; }
+  .video-close {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 20px;
+    cursor: none;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .video-close:hover { color: var(--gold); }
+
+  /* ACTIVE NAV MARKER */
+  .section-marker { position: absolute; top: -80px; }
+
+  /* NUMBER COUNTER */
+  .counter { display: inline-block; }
+
+  @media (max-width: 1024px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    #why { grid-template-columns: 1fr; padding: 80px 24px; }
+    .why-visual-badge { right: 0; }
+    #stats-bar { grid-template-columns: repeat(3, 1fr); }
+    .retail-grid { grid-template-columns: 1fr 1fr; }
+    .retail-card:first-child { grid-column: 1 / 3; grid-row: auto; }
+    .luxury-inner { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+    #luxury { padding: 80px 24px; }
+    .dining-scroll { grid-template-columns: 1fr 1fr; }
+    .attractions-feature { grid-template-columns: 1fr; }
+    .events-grid { grid-template-columns: 1fr; }
+    .sponsorship-header { grid-template-columns: 1fr; }
+    .sponsorship-tiers { grid-template-columns: 1fr; }
+    .leasing-paths { grid-template-columns: 1fr 1fr; }
+    .events-data { grid-template-columns: repeat(2, 1fr); }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .form-row { grid-template-columns: 1fr; }
+    #retail, #dining, #attractions, #events, #sponsorship, #leasing { padding: 80px 24px; }
+    #cta { padding: 80px 24px; }
+    footer { padding: 40px 24px; }
+    .hero-stats { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Mall<span>.</span>of<span>.</span>America</a>
+  <ul class="nav-links">
+    <li><a href="#why" data-section="why">The Property</a></li>
+    <li><a href="#retail" data-section="retail">Retail</a></li>
+    <li><a href="#dining" data-section="dining">Dining</a></li>
+    <li><a href="#attractions" data-section="attractions">Entertainment</a></li>
+    <li><a href="#events" data-section="events">Events</a></li>
+    <li><a href="#sponsorship" data-section="sponsorship">Partnerships</a></li>
+    <li><a href="#leasing" data-section="leasing">Leasing</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal('contact')">Request a Meeting</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/4nKSFzaT0ew?autoplay=1&mute=1&loop=1&playlist=4nKSFzaT0ew&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      title="Mall of America Aerial"
+    ></iframe>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Bloomington, Minnesota · The Center of Everything</p>
+    <h1 class="hero-title">America's<br><em>Largest</em><br>Destination</h1>
+    <p class="hero-sub">5.6 million square feet. 520+ stores. 40+ million visitors a year. This is not a shopping mall. It is a city-scale commercial platform unlike anything else on the continent.</p>
+    <div class="hero-actions">
+      <a href="#leasing" class="btn-primary">Explore Leasing</a>
+      <button class="btn-ghost" onclick="openVideo('4nKSFzaT0ew')">▶ Watch the Story</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stats-item">
+      <div class="hero-stats-num"><span class="counter" data-target="40">40</span>M<sup>+</sup></div>
+      <div class="hero-stats-label">Annual Visitors</div>
+    </div>
+    <div class="hero-stats-item">
+      <div class="hero-stats-num"><span class="counter" data-target="520">520</span><sup>+</sup></div>
+      <div class="hero-stats-label">Retail Tenants</div>
+    </div>
+    <div class="hero-stats-item">
+      <div class="hero-stats-num">$<span class="counter" data-target="2">2</span>B<sup>+</sup></div>
+      <div class="hero-stats-label">Annual Revenue Impact</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div id="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num"><span class="stat-unit">5.6M</span></span>
+    <span class="stat-label">Square Feet</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <span class="stat-num"><span class="stat-unit">520<sup style="font-size:0.5em">+</sup></span></span>
+    <span class="stat-label">Stores & Experiences</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <span class="stat-num"><span class="stat-unit">40M<sup style="font-size:0.5em">+</sup></span></span>
+    <span class="stat-label">Visitors Annually</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <span class="stat-num"><span class="stat-unit">$2B<sup style="font-size:0.5em">+</sup></span></span>
+    <span class="stat-label">Economic Impact</span>
+  </div>
+  <div class="stat-item reveal reveal-delay-4">
+    <span class="stat-num"><span class="stat-unit">32</span></span>
+    <span class="stat-label">Years of Leadership</span>
+  </div>
+</div>
+
+<!-- WHY THIS PROPERTY -->
+<section id="why">
+  <div class="section-marker" id="why-marker"></div>
+  <div class="why-visual reveal">
+    <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900&q=85" alt="Mall of America aerial view" loading="lazy">
+    <div class="why-visual-badge">
+      #1 Most Visited<br>Destination in the U.S.
+    </div>
+  </div>
+  <div>
+    <p class="section-eyebrow reveal">Why This Property</p>
+    <h2 class="section-title reveal reveal-delay-1">Where 40 million<br>people <em>choose</em> to go.</h2>
+    <p class="section-body reveal reveal-delay-2" style="margin-top:24px;">Located 10 minutes from Minneapolis-St. Paul International Airport, MOA sits at the center of a 22-state trade area. Our visitors don't just shop — they stay, dine, play, and return. Average dwell time exceeds 3 hours, spending per visit outpaces every comparable property in North America.</p>
+    <ul class="why-list reveal reveal-delay-3">
+      <li>
+        <div class="why-list-icon"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3"/></svg></div>
+        <span><strong style="color:var(--white)">Regional Gravity</strong> — 22-state primary trade area. Accessible from 38 states within a 2-hour flight.</span>
+      </li>
+      <li>
+        <div class="why-list-icon"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3"/></svg></div>
+        <span><strong style="color:var(--white)">Year-Round Traffic</strong> — No outdoor exposure. 365-day operation with consistent, climate-controlled foot traffic regardless of season.</span>
+      </li>
+      <li>
+        <div class="why-list-icon"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3"/></svg></div>
+        <span><strong style="color:var(--white)">Affluent Demographics</strong> — Average household income $85K+. 60% of visitors travel more than 150 miles specifically to visit MOA.</span>
+      </li>
+      <li>
+        <div class="why-list-icon"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3"/></svg></div>
+        <span><strong style="color:var(--white)">Hotel Ecosystem</strong> — 6 hotels connected or adjacent to the property, with 6,000+ rooms within 2 miles.</span>
+      </li>
+      <li>
+        <div class="why-list-icon"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3"/></svg></div>
+        <span><strong style="color:var(--white)">Tax-Free Shopping</strong> — Minnesota's clothing tax exemption is a national draw. Shoppers choose MOA for the savings.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- RETAIL -->
+<section id="retail">
+  <div class="section-marker" id="retail-marker"></div>
+  <div class="retail-header">
+    <div>
+      <p class="section-eyebrow reveal">Retail Environment</p>
+      <h2 class="section-title reveal reveal-delay-1">520<em>+</em> Brands.<br>One Address.</h2>
+    </div>
+    <p class="section-body reveal reveal-delay-2" style="max-width: 380px;">From first-to-market flagship openings to high-velocity pop-ups, MOA is where brands come to be discovered. Our tenant mix spans every category — and our visitor profile ensures your investment performs.</p>
+  </div>
+  <div class="retail-grid">
+    <div class="retail-card reveal">
+      <img src="https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=800&q=80" alt="MOA Main Atrium" loading="lazy">
+      <div class="retail-card-overlay">
+        <div>
+          <span class="retail-card-count">4</span>
+          <span class="retail-card-label">Levels of Retail Surrounding a 7-Acre Indoor Park</span>
+        </div>
+      </div>
+    </div>
+    <div class="retail-card reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1555529902-5261145633bf?w=600&q=80" alt="Luxury Retail" loading="lazy">
+      <div class="retail-card-overlay">
+        <div>
+          <span class="retail-card-count">Luxury</span>
+          <span class="retail-card-label">Flagship Wing</span>
+        </div>
+      </div>
+    </div>
+    <div class="retail-card reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?w=600&q=80" alt="Fashion Retail" loading="lazy">
+      <div class="retail-card-overlay">
+        <div>
+          <span class="retail-card-count">200+</span>
+          <span class="retail-card-label">Fashion & Apparel Stores</span>
+        </div>
+      </div>
+    </div>
+    <div class="retail-card reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80" alt="Beauty Retail" loading="lazy">
+      <div class="retail-card-overlay">
+        <div>
+          <span class="retail-card-count">50+</span>
+          <span class="retail-card-label">Beauty & Lifestyle</span>
+        </div>
+      </div>
+    </div>
+    <div class="retail-card reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1591085686350-798c0f9faa7f?w=600&q=80" alt="Pop-up Spaces" loading="lazy">
+      <div class="retail-card-overlay">
+        <div>
+          <span class="retail-card-count">Pop-Up</span>
+          <span class="retail-card-label">Flexible Activation Spaces</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LUXURY -->
+<section id="luxury">
+  <div class="luxury-inner">
+    <div>
+      <p class="section-eyebrow reveal">Luxury & Elevated</p>
+      <h2 class="section-title reveal reveal-delay-1">Where prestige<br>finds its <em>audience.</em></h2>
+      <p class="section-body reveal reveal-delay-2" style="margin-top:24px;">The North Garden is MOA's elevated destination — a curated environment designed to attract high-net-worth visitors and position premium brands in an aspirational context. With affluent Midwest shoppers who travel specifically for luxury access, this is the market you've been underestimating.</p>
+      <div class="luxury-brands reveal reveal-delay-3">
+        <div class="luxury-brand-item">Coach</div>
+        <div class="luxury-brand-item">Michael Kors</div>
+        <div class="luxury-brand-item">Nordstrom</div>
+        <div class="luxury-brand-item">Rolex</div>
+        <div class="luxury-brand-item">Tiffany & Co.</div>
+        <div class="luxury-brand-item">Hugo Boss</div>
+        <div class="luxury-brand-item">Burberry</div>
+        <div class="luxury-brand-item">Kate Spade</div>
+        <div class="luxury-brand-item">Versace</div>
+      </div>
+      <p class="section-body reveal reveal-delay-4" style="margin-top:32px; font-size:13px;">Flagship opportunities available now. Inquire about first-mover positioning in the expanded luxury corridor.</p>
+      <a href="#" class="btn-primary reveal" style="margin-top:24px; display:inline-block;" onclick="openModal('leasing')">Inquire About Luxury Leasing</a>
+    </div>
+    <div class="luxury-visual reveal reveal-delay-2">
+      <img src="https://images.unsplash.com/photo-1617470703223-a1ae70d18c7e?w=700&q=80" alt="Luxury Shopping Experience" loading="lazy">
+      <div class="luxury-tag">North Garden · Luxury Level</div>
+    </div>
+  </div>
+</section>
+
+<!-- DINING -->
+<section id="dining">
+  <div class="dining-inner">
+    <div class="dining-header">
+      <p class="section-eyebrow reveal">Dining & Lifestyle</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end">
+        <h2 class="section-title reveal reveal-delay-1">50+ concepts.<br>Every <em>craving.</em></h2>
+        <p class="section-body reveal reveal-delay-2">Food is no longer an afterthought — it is the experience. MOA's dining portfolio spans celebrity chef concepts, national flagships, and local institutions, all driving longer dwell time and higher average spend per visit.</p>
+      </div>
+    </div>
+    <div class="dining-scroll">
+      <div class="dining-card reveal">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80" alt="Fine Dining" loading="lazy">
+        <div class="dining-card-info">
+          <div class="dining-card-name">Fine Dining</div>
+          <div class="dining-card-type">Elevated Concepts</div>
+        </div>
+      </div>
+      <div class="dining-card reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&q=80" alt="Casual Dining" loading="lazy">
+        <div class="dining-card-info">
+          <div class="dining-card-name">Casual & Fast Casual</div>
+          <div class="dining-card-type">High-Volume Traffic Drivers</div>
+        </div>
+      </div>
+      <div class="dining-card reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=500&q=80" alt="Bar & Cocktails" loading="lazy">
+        <div class="dining-card-info">
+          <div class="dining-card-name">Bars & Nightlife</div>
+          <div class="dining-card-type">Extended Evening Economy</div>
+        </div>
+      </div>
+      <div class="dining-card reveal reveal-delay-3">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Food Hall" loading="lazy">
+        <div class="dining-card-info">
+          <div class="dining-card-name">Food Hall</div>
+          <div class="dining-card-type">15 Concepts · One Destination</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATTRACTIONS -->
+<section id="attractions">
+  <div class="attractions-header">
+    <p class="section-eyebrow reveal">Entertainment & Attractions</p>
+    <h2 class="section-title reveal reveal-delay-1">What no other<br>mall on earth <em>can offer.</em></h2>
+  </div>
+
+  <div class="attr-tabs">
+    <button class="attr-tab active" onclick="switchAttr(this, 'nickelodeon')">Nickelodeon Universe</button>
+    <button class="attr-tab" onclick="switchAttr(this, 'aquarium')">SEA LIFE Aquarium</button>
+    <button class="attr-tab" onclick="switchAttr(this, 'cinema')">Cinema & Entertainment</button>
+    <button class="attr-tab" onclick="switchAttr(this, 'minigolf')">Mini Golf & More</button>
+  </div>
+
+  <div id="attr-nickelodeon" class="attractions-feature attr-panel">
+    <div class="attr-visual">
+      <img src="https://images.unsplash.com/photo-1513689125086-6c432170e843?w=800&q=80" alt="Nickelodeon Universe" loading="lazy">
+    </div>
+    <div class="attr-content">
+      <div class="nickelodeon-badge">Featured Attraction</div>
+      <p class="section-eyebrow">Nickelodeon Universe</p>
+      <h3 class="section-title" style="font-size:40px;">America's largest<br>indoor <em>theme park.</em></h3>
+      <p class="section-body" style="margin-top:20px;">7 acres of indoor adventure. 27 rides and attractions. Themed around the most beloved children's and family entertainment brands on the planet. The only park of its kind in North America — and it's inside your mall.</p>
+      <ul class="attr-list">
+        <li><span>Rides & Attractions</span><span>27</span></li>
+        <li><span>Indoor Footprint</span><span>7 Acres</span></li>
+        <li><span>Annual Riders</span><span>4M+</span></li>
+        <li><span>Branded Experiences</span><span>12+</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="attr-aquarium" class="attractions-feature attr-panel" style="display:none">
+    <div class="attr-visual">
+      <img src="https://images.unsplash.com/photo-1534450077459-4688de2d4d04?w=800&q=80" alt="Aquarium" loading="lazy">
+    </div>
+    <div class="attr-content">
+      <p class="section-eyebrow">SEA LIFE Minnesota Aquarium</p>
+      <h3 class="section-title" style="font-size:40px;">10,000 creatures.<br>One <em>immersive</em> world.</h3>
+      <p class="section-body" style="margin-top:20px;">A world-class aquarium embedded within the mall, drawing over 1 million visitors per year independently. SEA LIFE adds an educational, emotional, and family-oriented draw that extends dwell time beyond retail alone.</p>
+      <ul class="attr-list">
+        <li><span>Marine Species</span><span>10K+</span></li>
+        <li><span>Annual Visitors</span><span>1M+</span></li>
+        <li><span>360° Tunnel Walk</span><span>Yes</span></li>
+        <li><span>Coral Reef Exhibit</span><span>Live</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="attr-cinema" class="attractions-feature attr-panel" style="display:none">
+    <div class="attr-visual">
+      <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80" alt="Cinema" loading="lazy">
+    </div>
+    <div class="attr-content">
+      <p class="section-eyebrow">Cinema & Entertainment</p>
+      <h3 class="section-title" style="font-size:40px;">14 screens.<br>Premium <em>format.</em></h3>
+      <p class="section-body" style="margin-top:20px;">A full-scale cinema complex with premium large-format screens, private hire capability, and consistent evening-economy traffic that supports adjacent F&B and retail well beyond standard mall hours.</p>
+      <ul class="attr-list">
+        <li><span>Screens</span><span>14</span></li>
+        <li><span>Private Hire Available</span><span>Yes</span></li>
+        <li><span>Evening Traffic</span><span>+40%</span></li>
+        <li><span>Annual Admissions</span><span>2M+</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="attr-minigolf" class="attractions-feature attr-panel" style="display:none">
+    <div class="attr-visual">
+      <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=800&q=80" alt="Mini Golf" loading="lazy">
+    </div>
+    <div class="attr-content">
+      <p class="section-eyebrow">Mini Golf & Beyond</p>
+      <h3 class="section-title" style="font-size:40px;">Play. Compete.<br><em>Stay longer.</em></h3>
+      <p class="section-body" style="margin-top:20px;">From mini golf to bowling, escape rooms to comedy clubs — MOA's entertainment layer keeps visitors engaged for hours beyond their shopping intent, multiplying total spend and creating memories that drive return visits.</p>
+      <ul class="attr-list">
+        <li><span>Entertainment Venues</span><span>10+</span></li>
+        <li><span>Avg. Extended Dwell Time</span><span>+1.5hrs</span></li>
+        <li><span>Group Event Capacity</span><span>500+</span></li>
+        <li><span>Private Hire</span><span>Available</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="events-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:0">
+      <div>
+        <p class="section-eyebrow reveal">Events & Platform</p>
+        <h2 class="section-title reveal reveal-delay-1">A global stage.<br>In the <em>heart</em> of America.</h2>
+      </div>
+      <p class="section-body reveal reveal-delay-2">MOA is not just a venue — it is a media platform. With 40 million visitors who move through the property, any activation here generates exposure that rivals major broadcast buys. Brands, artists, and event producers choose MOA because the audience is already here.</p>
+    </div>
+  </div>
+  <div class="events-grid reveal" style="max-width:1400px;margin:64px auto 0">
+    <div class="event-main">
+      <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80" alt="Live Event at MOA" loading="lazy">
+      <div class="event-main-overlay">
+        <div class="event-capacity-pill">Rotunda Stage</div>
+        <h3 class="event-main-title">Concert-Scale Events in the Nation's Living Room</h3>
+        <p class="event-main-desc">The MOA Rotunda is a purpose-built event stage that has hosted world-touring artists, global brand launches, and television productions. With 20,000 sq ft of flexible event space, it rivals standalone venues — with the added benefit of 100,000 daily visitors as your organic audience.</p>
+        <button class="btn-primary" style="margin-top:24px;cursor:none;" onclick="openModal('events')">Book the Rotunda</button>
+      </div>
+    </div>
+    <div class="event-side">
+      <div class="event-card">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="Brand Activation" loading="lazy">
+        <div class="event-card-overlay">
+          <div class="event-type">Brand Activations</div>
+          <div class="event-name">Experiential Marketing</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img src="https://images.unsplash.com/photo-1559223607-b4d0555ae227?w=600&q=80" alt="Corporate Event" loading="lazy">
+        <div class="event-card-overlay">
+          <div class="event-type">Corporate Events</div>
+          <div class="event-name">Product Launches</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80" alt="Entertainment Events" loading="lazy">
+        <div class="event-card-overlay">
+          <div class="event-type">Entertainment</div>
+          <div class="event-name">Celebrity Appearances</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="events-data reveal" style="max-width:1400px;margin:2px auto 0">
+    <div class="event-data-item">
+      <span class="event-data-num">300<sup style="font-size:0.5em">+</sup></span>
+      <span class="event-data-label">Events Per Year</span>
+    </div>
+    <div class="event-data-item">
+      <span class="event-data-num">20K</span>
+      <span class="event-data-label">Sq Ft Event Space</span>
+    </div>
+    <div class="event-data-item">
+      <span class="event-data-num">100K</span>
+      <span class="event-data-label">Daily On-Site Audience</span>
+    </div>
+    <div class="event-data-item">
+      <span class="event-data-num">$0</span>
+      <span class="event-data-label">Media Buy for Ambient Reach</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORSHIP -->
+<section id="sponsorship">
+  <div class="sponsorship-inner">
+    <div class="sponsorship-header">
+      <div>
+        <p class="section-eyebrow reveal">Brand Partnerships</p>
+        <h2 class="section-title reveal reveal-delay-1">Your brand.<br>40 million<br><em>impressions.</em></h2>
+      </div>
+      <div>
+        <p class="section-body reveal">Sponsorship at MOA isn't signage. It's cultural positioning. Partnering brands gain physical presence, digital integration, event co-branding, and native audience access that no standalone media channel can replicate.</p>
+        <p class="section-body reveal reveal-delay-1" style="margin-top:20px;">Audience breakdown: 58% female, 42% male. Median age 34. HHI $85K+. Family-skewing with strong millennial and Gen Z composition. Highly receptive to lifestyle and brand messaging.</p>
+      </div>
+    </div>
+    <div class="sponsorship-tiers reveal">
+      <div class="tier-card">
+        <div class="tier-name">Presenting Sponsor</div>
+        <div class="tier-price">Custom<br><span style="font-size:20px;color:var(--muted)">Pricing</span></div>
+        <div class="tier-price-label">Annual Partnership</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Property naming / category exclusivity</li>
+          <li class="tier-feature">Dedicated event programming</li>
+          <li class="tier-feature">Premium digital & physical signage</li>
+          <li class="tier-feature">Co-branded media campaigns</li>
+          <li class="tier-feature">Exclusive audience data access</li>
+          <li class="tier-feature">Executive relationship management</li>
+        </ul>
+        <a href="#" class="tier-cta" onclick="openModal('sponsorship')">Inquire</a>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-name">Signature Partner</div>
+        <div class="tier-price">$500K<br><span style="font-size:16px">+</span></div>
+        <div class="tier-price-label">Annual Investment</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Category exclusivity within sector</li>
+          <li class="tier-feature">2 dedicated activation events</li>
+          <li class="tier-feature">Premium digital + experiential placements</li>
+          <li class="tier-feature">Social amplification package</li>
+          <li class="tier-feature">Quarterly audience reporting</li>
+        </ul>
+        <a href="#" class="tier-cta" onclick="openModal('sponsorship')">Get Started</a>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Brand Activator</div>
+        <div class="tier-price">$100K<br><span style="font-size:16px">+</span></div>
+        <div class="tier-price-label">Per Activation</div>
+        <div class="tier-divider"></div>
+        <ul class="tier-features">
+          <li class="tier-feature">Single high-impact activation event</li>
+          <li class="tier-feature">On-property presence & branding</li>
+          <li class="tier-feature">Social content integration</li>
+          <li class="tier-feature">Post-event audience analytics</li>
+          <li class="tier-feature">Flexible scheduling</li>
+        </ul>
+        <a href="#" class="tier-cta" onclick="openModal('sponsorship')">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEASING -->
+<section id="leasing">
+  <div class="leasing-inner">
+    <p class="section-eyebrow reveal">Leasing Opportunities</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;">
+      <h2 class="section-title reveal reveal-delay-1">Find your<br>space in the<br><em>center.</em></h2>
+      <p class="section-body reveal reveal-delay-2">Whether you're opening a flagship, testing a concept, or scaling a brand — MOA has a leasing path built for your goals. Our team works with retailers at every stage, from 200-square-foot pop-ups to 30,000-square-foot anchors.</p>
+    </div>
+    <div class="leasing-paths">
+      <div class="leasing-path reveal">
+        <div class="leasing-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        </div>
+        <div class="leasing-path-name">Flagship Stores</div>
+        <p class="leasing-path-desc">5,000–30,000 sq ft. Built-to-suit opportunities for brands ready to make a statement. Long-term leases with co-investment in tenant improvement.</p>
+        <a href="#" class="leasing-path-link" onclick="openModal('leasing')">Explore Flagship <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="leasing-path reveal reveal-delay-1">
+        <div class="leasing-icon">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        </div>
+        <div class="leasing-path-name">Mid-Tier Retail</div>
+        <p class="leasing-path-desc">1,000–5,000 sq ft. High-traffic corridors with proven category performance data. We match brands to locations by visitor affinity.</p>
+        <a href="#" class="leasing-path-link" onclick="openModal('leasing')">View Availabilities <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="leasing-path reveal reveal-delay-2">
+        <div class="leasing-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="leasing-path-name">Pop-Up & Short-Term</div>
+        <p class="leasing-path-desc">200–2,000 sq ft. Flexible terms from 30 days to 12 months. Ideal for emerging brands, seasonal launches, and product testing.</p>
+        <a href="#" class="leasing-path-link" onclick="openModal('leasing')">Apply Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="leasing-path reveal reveal-delay-3">
+        <div class="leasing-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 2h18v20l-3-2-3 2-3-2-3 2-3-2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+        </div>
+        <div class="leasing-path-name">F&B Concepts</div>
+        <p class="leasing-path-desc">Ground-floor and food court locations with full kitchen buildout support. Category performance data provided at inquiry.</p>
+        <a href="#" class="leasing-path-link" onclick="openModal('leasing')">F&B Inquiry <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <p class="cta-eyebrow">You've Seen What's Possible</p>
+    <h2 class="cta-title">Your brand belongs here.</h2>
+    <p class="cta-sub">40 million people walk through these doors every year. The question isn't whether MOA is right for you — it's whether you can afford not to be here.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-dark" onclick="openModal('leasing')">Explore Leasing</a>
+      <a href="#" class="btn-outline-dark" onclick="openModal('sponsorship')">Partnership Inquiry</a>
+      <a href="#" class="btn-outline-dark" onclick="openModal('events')">Book an Event</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Mall<span>.</span>of<span>.</span>America</div>
+  <div class="footer-note">© 2025 Mall of America · Bloomington, Minnesota · 5.6M sq ft</div>
+  <div class="footer-links">
+    <a href="#why">About</a>
+    <a href="#events">Events</a>
+    <a href="#leasing">Leasing</a>
+    <a href="#" onclick="openModal('contact')">Contact</a>
+  </div>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="modal-contact">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('contact')">✕</button>
+    <p class="section-eyebrow" id="modal-title-contact">Request a Meeting</p>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin-top:8px;" id="modal-heading-contact">Let's talk about<br><em style="color:var(--gold)">your opportunity.</em></h3>
+    <div class="modal-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" placeholder="Smith">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Company</label>
+          <input type="text" class="form-input" placeholder="Brand Name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="jane@brand.com">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label class="form-label">I'm interested in</label>
+        <select class="form-select" id="modal-interest">
+          <option>Retail Leasing</option>
+          <option>Brand Sponsorship / Partnership</option>
+          <option>Event Booking</option>
+          <option>Pop-Up / Short-Term Space</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <button class="btn-primary" style="width:100%;padding:18px;font-size:12px;cursor:none;" onclick="submitForm()">Submit Inquiry →</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO OVERLAY -->
+<div class="video-overlay" id="videoOverlay">
+  <div class="video-wrap">
+    <button class="video-close" onclick="closeVideo()">✕ Close</button>
+    <iframe id="videoFrame" src="" frameborder="0" allowfullscreen allow="autoplay; fullscreen"></iframe>
+  </div>
+</div>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let cursorX = 0, cursorY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  cursorX = e.clientX; cursorY = e.clientY;
+  cursor.style.left = cursorX + 'px';
+  cursor.style.top = cursorY + 'px';
+});
+function animateRing() {
+  ringX += (cursorX - ringX) * 0.12;
+  ringY += (cursorY - ringY) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// PROGRESS BAR
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+  progressBar.style.width = pct + '%';
+});
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// ACTIVE NAV
+const sections = ['why','retail','luxury','dining','attractions','events','sponsorship','leasing'];
+const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.dataset.section === current);
+  });
+});
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id === '#') return;
+    e.preventDefault();
+    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ATTRACTION TABS
+function switchAttr(btn, id) {
+  document.querySelectorAll('.attr-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.attr-panel').forEach(p => p.style.display = 'none');
+  document.getElementById('attr-' + id).style.display = 'grid';
+}
+
+// MODAL
+function openModal(type) {
+  event?.preventDefault();
+  const interests = { leasing: 'Retail Leasing', sponsorship: 'Brand Sponsorship / Partnership', events: 'Event Booking', contact: 'General Inquiry' };
+  if (interests[type]) document.getElementById('modal-interest').value = interests[type];
+  const titles = { leasing: 'Leasing Inquiry', sponsorship: 'Partnership Inquiry', events: 'Event Booking', contact: 'Request a Meeting' };
+  document.getElementById('modal-title-contact').textContent = titles[type] || 'Request a Meeting';
+  document.getElementById('modal-overlay-contact' + '').classList?.remove('open');
+  document.getElementById('modal-contact').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) { m.classList.remove('open'); document.body.style.overflow = ''; }});
+});
+
+// VIDEO
+function openVideo(id) {
+  document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+  document.getElementById('videoOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVideo() {
+  document.getElementById('videoFrame').src = '';
+  document.getElementById('videoOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('videoOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('videoOverlay')) closeVideo();
+});
+
+// FORM SUBMIT
+function submitForm() {
+  const btn = event.currentTarget;
+  btn.textContent = '✓ Inquiry Received — We\'ll be in touch within 24 hours.';
+  btn.style.background = '#1a1a1a';
+  btn.style.color = 'var(--gold)';
+  btn.style.border = '1px solid var(--gold)';
+  setTimeout(() => closeModal('contact'), 3000);
+}
+
+// KEYBOARD ESC
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+    closeVideo();
+    document.body.style.overflow = '';
+  }
+});
+</script>
+</body>
+</html>
