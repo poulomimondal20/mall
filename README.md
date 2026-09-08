@@ -1,5 +1,5 @@
 AI Chatbot for Bhopal BRTS Navigation with Multilingual Assistance
-Challenge Background
+
 As Bhopal grows, the need for efficient public transportation becomes increasingly critical. The Bus Rapid Transit System (BRTS) is a key component of the city's transit network, providing reliable service through its red buses. Despite its importance, many commuters struggle with the BRTS due to unfamiliarity with routes and language barriers, leading to confusion and inefficiencies.
 
 Navigating BRTS routes can be complex, especially for those who are not fluent in the local language or new to the city. This challenge affects first-time users, tourists and non-native speakers who may find it difficult to understand schedules, routes and ticketing procedures.
