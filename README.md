@@ -26,11 +26,9 @@ Project Structure
     │
     ├── visualizations <- Code and Visualization dashboards generated for the project
     └── results        <- Folder to store Final analysis and modelling results and code.
-Project Setup
-Open the Command line or Terminal
 
-Clone the repository
-git clone https://dagshub.com/Omdena/VITBhopalUniversity_ChatbotforBRTSNavigation
+
+
 Move to the folder
 cd VITBhopalUniversity_ChatbotforBRTSNavigation
 To open with VSCode
